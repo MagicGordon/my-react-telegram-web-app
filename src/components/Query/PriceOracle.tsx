@@ -11,21 +11,21 @@ type resultPropsType = {
   refresh: object
 }
 
-type priceDetail = { 
-  multiplier: string | undefined, 
-  decimals: number | undefined
-}
-
-type assetPrice = {
-  asset_id: string | undefined,
-  price: priceDetail | undefined
-}
-
-// type priceInfo = {
-//   timestamp: string | undefined,
-//   recency_duration_sec: number | undefined,
-//   prices: assetPrice[]
+// type priceDetail = { 
+//   multiplier: string | undefined, 
+//   decimals: number | undefined
 // }
+
+// type assetPrice = {
+//   asset_id: string | undefined,
+//   price: priceDetail | undefined
+// }
+
+// // type priceInfo = {
+// //   timestamp: string | undefined,
+// //   recency_duration_sec: number | undefined,
+// //   prices: assetPrice[]
+// // }
 
 
 type priceInfo = {
