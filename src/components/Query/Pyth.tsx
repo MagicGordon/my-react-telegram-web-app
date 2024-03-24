@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import { Account } from "near-api-js"
 import { useEffect, useState } from "react";
 
@@ -12,6 +12,7 @@ type resultPropsType = {
 }
 
 type priceInfo = {
+  key: string,
   label: string | undefined,
   price: string | undefined,
   conf: string | undefined,
@@ -43,7 +44,7 @@ const price_identifiers_testnet = {
   "FRAX/USD": "a46737d6e4686b9cddd59725c9564f851aae93efa37c52f46d9fbcbe03d0344d",
 }
 
-const columns = [
+const columns: TableProps<priceInfo>['columns'] = [
   {
     title: 'Label',
     dataIndex: 'label',
@@ -68,6 +69,7 @@ const columns = [
     title: 'PublishTime',
     dataIndex: 'publish_time',
     key: 'publish_time',
+    render: (text) => text ? new Date(text * 1000).toLocaleString() : text,
   },
 ];
 
@@ -78,7 +80,8 @@ function Pyth({ queryTarget, nearAccount, refresh }: resultPropsType) {
   useEffect(() => {
     async function update() {
       setDate(undefined)
-      const network = queryTarget ? queryTarget.split(' ')[1] : undefined;
+      const network = queryTarget?.split(' ')[1];
+      const method = queryTarget?.split(' ')[2] == 'safe' ? 'get_price' : 'get_price_unsafe';
       if (network == 'mainnet') {
         const price_labels: string[] = [];
         const price_promises: Promise<priceInfo>[] = [];
@@ -87,7 +90,7 @@ function Pyth({ queryTarget, nearAccount, refresh }: resultPropsType) {
           price_labels.push(price_label);
           price_promises.push(nearAccount.account_mainnet.viewFunction({
             contractId: "pyth-oracle.near",
-            methodName: "get_price",
+            methodName: method,
             args: {
               price_identifier: price_identifier
             }
@@ -97,6 +100,7 @@ function Pyth({ queryTarget, nearAccount, refresh }: resultPropsType) {
         const result: priceInfo[] = [];
         for (let i = 0; i < price_labels.length; i++) {
           result.push({
+            key: i.toString(),
             label: price_labels[i],
             price: price_results[i] == null ? undefined : price_results[i].price,
             conf: price_results[i] == null ? undefined : price_results[i].conf,
@@ -113,7 +117,7 @@ function Pyth({ queryTarget, nearAccount, refresh }: resultPropsType) {
           price_labels.push(price_label);
           price_promises.push(nearAccount.account_testnet.viewFunction({
             contractId: "pyth-oracle.testnet",
-            methodName: "get_price",
+            methodName: method,
             args: {
               price_identifier: price_identifier
             }
@@ -123,6 +127,7 @@ function Pyth({ queryTarget, nearAccount, refresh }: resultPropsType) {
         const result: priceInfo[] = [];
         for (let i = 0; i < price_labels.length; i++) {
           result.push({
+            key: i.toString(),
             label: price_labels[i],
             price: price_results[i] == null ? undefined : price_results[i].price,
             conf: price_results[i] == null ? undefined : price_results[i].conf,

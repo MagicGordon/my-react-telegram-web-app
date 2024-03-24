@@ -36,8 +36,12 @@ function Header({ queryTarget, setQueryTarget }: propsType) {
       title: 'testnet',
       children: [
         {
-          value: 'pyth testnet',
+          value: 'pyth testnet safe',
           title: 'Pyth',
+        },
+        {
+          value: 'pyth testnet unsafe',
+          title: 'Pyth unsafe',
         },
         {
           value: 'priceoracle testnet',
@@ -50,8 +54,12 @@ function Header({ queryTarget, setQueryTarget }: propsType) {
       title: 'mainnet',
       children: [
         {
-          value: 'pyth mainnet',
+          value: 'pyth mainnet safe',
           title: 'Pyth',
+        },
+        {
+          value: 'pyth mainnet unsafe',
+          title: 'Pyth unsafe',
         },
         {
           value: 'priceoracle mainnet',

@@ -29,6 +29,7 @@ type resultPropsType = {
 
 
 type priceInfo = {
+  key: string,
   assetId: string | undefined,
   multiplier: string | undefined,
   decimals: number
@@ -70,6 +71,7 @@ function PriceOracle({ queryTarget, nearAccount, refresh }: resultPropsType) {
         })
         for (let i = 0; i < view_result.prices.length; i++) {
           result.push({
+            key: i.toString(),
             assetId: view_result.prices[i].asset_id,
             multiplier: view_result.prices[i].price ? view_result.prices[i].price.multiplier : undefined,
             decimals: view_result.prices[i].price ? view_result.prices[i].price.decimals : undefined,
@@ -85,6 +87,7 @@ function PriceOracle({ queryTarget, nearAccount, refresh }: resultPropsType) {
         })
         for (let i = 0; i < view_result.prices.length; i++) {
           result.push({
+            key: i.toString(),
             assetId: view_result.prices[i].asset_id,
             multiplier: view_result.prices[i].price ? view_result.prices[i].price.multiplier : undefined,
             decimals: view_result.prices[i].price ? view_result.prices[i].price.decimals : undefined,
