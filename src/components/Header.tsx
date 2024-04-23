@@ -47,6 +47,10 @@ function Header({ queryTarget, setQueryTarget }: propsType) {
           value: 'priceoracle testnet',
           title: 'PriceOracle',
         },
+        {
+          value: 'priceoracle public-testnet',
+          title: 'PriceOraclePublicTestnet',
+        },
       ],
     },
     {

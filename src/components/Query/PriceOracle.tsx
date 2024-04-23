@@ -94,6 +94,22 @@ function PriceOracle({ queryTarget, nearAccount, refresh }: resultPropsType) {
           })
         }
         setDate(result)
+      } else if (network == 'public-testnet') {
+        const result: priceInfo[] = [];
+        const view_result = await nearAccount.account_testnet.viewFunction({
+          contractId: "priceoracle.services.ref-labs.testnet",
+          methodName: "get_price_data",
+          args: {}
+        })
+        for (let i = 0; i < view_result.prices.length; i++) {
+          result.push({
+            key: i.toString(),
+            assetId: view_result.prices[i].asset_id,
+            multiplier: view_result.prices[i].price ? view_result.prices[i].price.multiplier : undefined,
+            decimals: view_result.prices[i].price ? view_result.prices[i].price.decimals : undefined,
+          })
+        }
+        setDate(result)
       }
     }
     update()
